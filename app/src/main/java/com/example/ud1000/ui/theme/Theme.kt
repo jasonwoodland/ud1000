@@ -39,11 +39,12 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun Ud1000Theme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme2: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val darkTheme = true
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
