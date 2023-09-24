@@ -69,4 +69,7 @@ dependencies {
 
     implementation(files("/Users/jason/AndroidStudioProjects/Detectortest/app/libs/d2xx.jar"))
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
 }
