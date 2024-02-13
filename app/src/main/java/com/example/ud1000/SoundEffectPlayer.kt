@@ -9,9 +9,8 @@ class SoundEffectPlayer(context: Context, resId: Int) {
 
     fun play() {
         mediaPlayer?.let {
-            if (!it.isPlaying) {
-                it.start()
-            }
+            it.seekTo(0)
+            it.start()
         }
     }
 

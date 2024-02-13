@@ -1,6 +1,7 @@
 package com.example.ud1000
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +20,8 @@ import kotlin.math.floor
 @Composable
 fun MainControls() {
     val view = LocalView.current
+
+    val menuBeep = SoundEffectPlayer.newInstance(view.context, R.raw.menu_beep3)
 
     Column(
         modifier = Modifier
@@ -154,7 +157,6 @@ fun MainControls() {
                                     checked = state.value as Boolean,
                                     onCheckedChange = {
                                         state.value = it
-                                        SoundEffectPlayer.newInstance(view.context, R.raw.beep).play()
                                     },
                                 )
                             }
@@ -176,9 +178,9 @@ fun MainControls() {
                                     onCheckedChange = {
                                         state.value = it
                                         if (it) {
-                                            AudioToneGenerator.getInstance().fadeIn(100)
+                                            AudioToneGenerator.getInstance().fadeIn()
                                         } else {
-                                            AudioToneGenerator.getInstance().fadeOut(100)
+                                            AudioToneGenerator.getInstance().fadeOutAndStop()
                                         }
                                     },
                                 )
@@ -232,11 +234,11 @@ fun MainControls() {
                                     value = state.value as Float,
                                     onValueChange = {
                                         state.value = it
-                                        AudioToneGenerator.getInstance().setVolume(it)
-                                        SoundEffectPlayer.newInstance(view.context, R.raw.beep).play()
+                                        AudioToneGenerator.getInstance().setVolume(it.toDouble())
+//                                        SoundEffectPlayer.newInstance(view.context, R.raw.beep).play()
                                     },
                                     valueRange = 0.0f..1.0f,
-                                    steps = 9
+//                                    steps = 9
                                 )
                             }
                         )
@@ -254,7 +256,9 @@ fun MainControls() {
             ){
                 Button(
                     modifier = Modifier.weight(1f),
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        menuBeep.play()
+                    }
                 ) {
                     Text(text = "GB")
                 }
@@ -265,7 +269,16 @@ fun MainControls() {
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.secondary,
                     ),
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        menuBeep.play()
+                        try {
+                            val metalDetector = MetalDetectorController(view.context)
+                            Toast.makeText(view.context, "Connected!", Toast.LENGTH_LONG).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(view.context, e.message, Toast.LENGTH_LONG).show()
+                        }
+
+                    }
                 ) {
                     Text(text = "Scan FTDI")
                 }

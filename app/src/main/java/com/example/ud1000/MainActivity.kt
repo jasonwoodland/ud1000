@@ -8,6 +8,7 @@ import android.media.AudioManager
 import android.media.AudioTrack
 import android.media.ToneGenerator
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -47,13 +48,18 @@ class MainActivity : ComponentActivity() {
         SharedPreferencesUtil.init(this)
 
 
+//        try {
+//            val metalDetector = MetalDetectorController(this.applicationContext)
+//        } catch (e: Exception) {
+//            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+//        }
 
         val coroutineScope = CoroutineScope(Dispatchers.Main)
         coroutineScope.launch {
             val tg = AudioToneGenerator.getInstance()
             tg.setFrequency(432.0)
             tg.start()
-            tg.fadeIn(500, 1f)
+            tg.fadeIn(500, 1.0)
 //            var a = 1f
 //            var ad = 0.05f
 //            var f = 400.0
@@ -88,6 +94,7 @@ class MainActivity : ComponentActivity() {
             val controller = WindowInsetsControllerCompat(window, view)
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             controller.hide(WindowInsetsCompat.Type.navigationBars())
+
 
             Ud1000Theme {
                 // A surface container using the 'background' color from the theme
